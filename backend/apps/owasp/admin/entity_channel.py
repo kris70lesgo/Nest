@@ -62,7 +62,15 @@ class EntityChannelAdmin(admin.ModelAdmin):
     )
 
     def channel_search_display(self, obj):
-        """Display the channel name for the selected channel."""
+        """Display the channel name for the selected channel.
+
+        Args:
+            obj (EntityChannel): The entity channel instance.
+
+        Returns:
+            str: The channel name or a placeholder.
+
+        """
         if obj.channel_id and obj.channel_type:
             try:
                 if obj.channel_type.model == "conversation":
@@ -75,7 +83,17 @@ class EntityChannelAdmin(admin.ModelAdmin):
     channel_search_display.short_description = "Channel Name"
 
     def get_form(self, request, obj=None, **kwargs):
-        """Get the form for the EntityChannel model."""
+        """Get the form for the EntityChannel model.
+
+        Args:
+            request (HttpRequest): The current request.
+            obj (EntityChannel): The entity channel instance being edited.
+            **kwargs: Additional keyword arguments.
+
+        Returns:
+            Form: The configured admin form.
+
+        """
         form = super().get_form(request, obj, **kwargs)
         form.conversation_content_type_id = ContentType.objects.get_for_model(Conversation).id
 
